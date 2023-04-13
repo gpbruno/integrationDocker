@@ -15,12 +15,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build Docker Image
-        run: docker build -t my-image .
+        run: docker build -t testimg .
       - name: Tag Docker Image
-        run: docker tag my-image ${{ secrets.DOCKERHUB_USERNAME }}/my-image:latest
+        run: docker tag my-image ${{ secrets.DOCKERHUB_USERNAME }}/testimg:latest
       - name: Push Docker Image
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/my-image:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/testimg:latest
