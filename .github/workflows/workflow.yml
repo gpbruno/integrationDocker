@@ -25,4 +25,4 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/testimg:latest
       - name: create container
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/testimg:latest
+        run: docker run -d -p 8080:80 --name testcontainer ${{ secrets.DOCKERHUB_USERNAME }}/testimg:latest
