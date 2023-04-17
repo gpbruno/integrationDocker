@@ -24,8 +24,8 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/testimg:latest
+      - name: Pull Docker image
+        run: docker pull ${{ secrets.DOCKERHUB_USERNAME }}/testimg:latest
       - name: create container
         run: docker run --name contame -d testimg:latest
-      - name: Check Docker info
-        run: docker info
 
