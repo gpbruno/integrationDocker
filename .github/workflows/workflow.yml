@@ -25,6 +25,5 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/testimg:latest
       - name: create container
-        run: docker run -d testimg:latest
-      - name: Check Docker version
-        run: docker version
+        run: docker run --name contame -d testimg:latest
+
