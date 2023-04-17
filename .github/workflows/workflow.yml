@@ -26,4 +26,6 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/testimg:latest
       - name: create container
         run: docker run --name contame -d testimg:latest
+      - name: Check Docker info
+        run: docker info
 
