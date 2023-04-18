@@ -1,4 +1,4 @@
-name: Deploy WAR file to Docker container
+name: Deploy to Docker
 
 on:
   push:
@@ -8,30 +8,27 @@ on:
 jobs:
   build-and-deploy:
     runs-on: windows-latest
+    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Docker
-        uses: docker/setup-docker@v2
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: true
-          tags: ownya23/testimg:latest
-          dockerfile: Dockerfile
-
-      - name: Get Docker metadata
-        id: metadata
-        uses: docker/metadata-action@v3
-        with:
-          images: ownya23/testimg:latest
-
-      - name: Run Docker container
-        uses: docker/run-action@v2
-        with:
-          image: ${{ steps.metadata.outputs.metadata }}
-          ports: 8080:8080
-          detach: true
+    - uses: actions/checkout@v2
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+    
+    - name: Login to Docker Hub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+    
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        push: true
+        tags: ownya23/testimg:latest
+        file: Dockerfile
+    
+    - name: Run Docker container
+      run: |
+        docker run -p 8080:8080 ownya23/testimg:latest
