@@ -1,15 +1,37 @@
-name: Build and Deploy
+name: Deploy WAR file to Docker container
+
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   build-and-deploy:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Build Docker image
-      run: |
-        docker build -t ownya23/testimg:latest .
-    - name: Run Docker container
-      run: docker run -d --name testimg-container -p 8080:8080 ownya23/testimg:latest
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker
+        uses: docker/setup-docker@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ownya23/testimg:latest
+          dockerfile: Dockerfile
+
+      - name: Get Docker metadata
+        id: metadata
+        uses: docker/metadata-action@v3
+        with:
+          images: ownya23/testimg:latest
+
+      - name: Run Docker container
+        uses: docker/run-action@v1
+        with:
+          image: ${{ steps.metadata.outputs.metadata }}
+          ports: 8080:8080
+          detach: true
