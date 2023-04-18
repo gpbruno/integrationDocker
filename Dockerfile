@@ -1,5 +1,2 @@
-FROM alpine:latest
-
-RUN apk add --no-cache curl
-
-CMD ["curl", "https://google.com"]
+FROM tomcat:latest
+COPY myapp.war /usr/local/tomcat/webapps/
