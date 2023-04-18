@@ -5,10 +5,12 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
     - name: Build Docker image
-      run: docker build -t testimg.war .
+      run: |
+        docker build -t testimg.war .
+        docker tag testimg ownya23/testimg.war
     - name: Run Docker container
-      run: docker run -d --name myapp-container -p 8080:8080 testimg.war
+      run: docker run -d --name myapp-container -p 8080:8080 ownya23/testimg.war
