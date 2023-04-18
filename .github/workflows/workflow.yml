@@ -10,7 +10,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build Docker image
       run: |
-        docker build -t testimg.war .
-        docker tag testimg ownya23/testimg.war
+        docker build -t ownya23/testimg .
+        docker tag ownya23/testimg ownya23/testimg:latest
     - name: Run Docker container
-      run: docker run -d --name myapp-container -p 8080:8080 ownya23/testimg.war
+      run: docker run -d --name testimg-container -p 8080:8080 ownya23/testimg:latest
