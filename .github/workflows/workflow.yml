@@ -9,6 +9,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build Docker image
-      run: docker build -t testimg.tar .
+      run: docker build -t testimg.war .
     - name: Run Docker container
-      run: docker run -d --name myapp-container -p 8080:8080 testimg.tar
+      run: docker run -d --name myapp-container -p 8080:8080 testimg.war
