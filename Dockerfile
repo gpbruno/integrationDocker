@@ -1,3 +1,3 @@
 FROM tomcat:latest
-COPY testimg.war /usr/local/tomcat/webapps/
+COPY testimg.war C:\Users\Bruno.g.Pereira\Documents\Docker
 EXPOSE 8080
